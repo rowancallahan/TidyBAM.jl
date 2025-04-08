@@ -1,0 +1,12 @@
+name = "TidyBam"
+uuid = "04873e1f-e1af-413e-860c-36d002c06b09"
+authors = ["rowancallahan "]
+version = "0.1.0"
+
+[deps]
+Transducers = "28d57a85-8fef-5791-bfe6-a80928e7c999"
+XAM = "d759349c-bcba-11e9-07c2-5b90f8f05f7c"
+
+[compat]
+Transducers = "0.4.84"
+XAM = "0.4.0"
