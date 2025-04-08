@@ -4,7 +4,7 @@ using Transducers, TidyBAM, XAM
 #reader = open(BAM.Reader, "/Users/callahro//TidyBAM.jl/src/testbam.bam")
 
 # Iterate through records
-result = @readbam("/Users/callahro/TidyBAM.jl/src/testbam.bam")|> 
+result = readbam("/Users/callahro/TidyBAM.jl/src/testbam.bam")|> 
     @filterread(refname=="chr1") |>
     collect
     #need to hace filter(refname =="chr1) and filter( position<10000) as options super simple
@@ -15,5 +15,7 @@ result = @readbam("/Users/callahro/TidyBAM.jl/src/testbam.bam")|>
     #need to have reverse complement
 
     # Don't forget to close the reader
-print(result)
+print(result[1:10])
+writebam("./testbam.bam",result)
+
 
