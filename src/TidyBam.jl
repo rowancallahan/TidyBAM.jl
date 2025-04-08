@@ -1,53 +1,26 @@
-module TidyBam
+module TidyBAM
 import XAM, Transducers
 
-export @readbam, @bamfilter
-#position
-#length
-#unmapped
-#paired
+export @readbam, @filterread
+
 macro readbam(filepath)
     return quote
-	open(XAM.BAM.Reader, $filepath) |>
-        Transducers.Map(record -> (refname=XAM.BAM.refname(record),
-		       position=XAM.BAM.position(record)))
-
+    	open(XAM.BAM.Reader, $filepath)
     end
 end
 
-macro filterreads(filters...)
-    expression_list = []
-
-    for arg in filters
-	expression= quote
-		Transducers.Filter(read-> $filter)
-        end
+macro filterread(filter_criteria)
+  #this function takes in a filtering criteria quote
+  #then it turns it into an actual filtering step
+  #that uses transducers to put into a real transducer pipeline
+  function_out = quote
+     Transducers.Filter(read->begin
+       refname= XAM.BAM.refname(read)
+       position = XAM.BAM.position(read)
+       criteria = $(filter_criteria)
+       return criteria 
+       end)
     end
-
 end
-
-#@bamfilter(filters...)
-#    expression_list = []
-#    for arg in filters
-#	    if key=="position"
-#            Filter(record -> BAM.refname(record) 
-#    Filter(pair -> pair[1] == "chr1") |>
-#
-#	elseif key == "refname"
-#
-#	else
-#	    throw(ArgumentError("invalid bam record type, available options are position and refname"))
-#	end
-#    end
-#expression = :(Filter
-#    for argument in filters 
-#     
-#    end
-#
-#    return quote
-#    end
-#
-#end
-
 
 end # module TidyBam
