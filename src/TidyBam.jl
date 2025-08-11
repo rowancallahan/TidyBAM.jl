@@ -39,4 +39,4 @@ function writebam(filename,record_list;bam_header=file_header)
   end
 end
 
-end # module TidyBam
+end # module TidyBAM
